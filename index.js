@@ -28,15 +28,17 @@ function checkCashRegister(price, cash, cid) {
     return previous
   }, 0)
 
-  let [ hundredsBucketName, hundredsBucket ] = [...cid[8]]
-  let [ twentiesBucketName, twentiesBucket ] = [...cid[7]]
-  let [ tensBucketName, tensBucket ] = [...cid[6]]
-  let [ fivesBucketName, fivesBucket ] = [...cid[5]]
-  let [ onesBucketName, onesBucket ] = [...cid[4]]
-  let [ quartersBucketName, quartersBucket ] = [...cid[3]]
-  let [ dimesBucketName, dimesBucket ] = [...cid[2]]
-  let [ nickelsBucketName, nickelsBucket ] = [...cid[1]]
-  let [ penniesBucketName, penniesBucket ] = [...cid[0]]
+  let [
+    [penniesBucketName, penniesBucket],
+    [nickelsBucketName, nickelsBucket],
+    [dimesBucketName, dimesBucket],
+    [quartersBucketName, quartersBucket],
+    [onesBucketName, onesBucket],
+    [fivesBucketName, fivesBucket],
+    [tensBucketName, tensBucket],
+    [twentiesBucketName, twentiesBucket],
+    [hundredsBucketName, hundredsBucket]
+  ] = [...cid]
 
   // returns an array consisting of name and the amount added to change to be given
   function payTheChange(bucket, denomination, bucketName) {
