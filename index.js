@@ -54,7 +54,7 @@ function checkCashRegister(price, cash, cid) {
     return changeToBeGivenArray.push([bucketName, changeToBeGiven]);
   }
 
-  change > unitAmount["ONE HUNDRED"] && ( payTheChange(hundredsBucket, unitAmount["ONE HUNDRED"], hundredsBucketName) )
+  change >= unitAmount["ONE HUNDRED"] && ( payTheChange(hundredsBucket, unitAmount["ONE HUNDRED"], hundredsBucketName) )
   change >= unitAmount.TWENTY && ( payTheChange(twentiesBucket, unitAmount.TWENTY, twentiesBucketName) )
   change >= unitAmount.TEN && ( payTheChange(tensBucket, unitAmount.TEN, tensBucketName) )
   change >= unitAmount.FIVE && ( payTheChange(fivesBucket, unitAmount.FIVE, fivesBucketName) )
