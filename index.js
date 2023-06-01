@@ -15,6 +15,8 @@ function checkCashRegister(price, cash, cid) {
     "ONE HUNDRED": 100,
   }
 
+  // using Maps instead of Objects, although later on I cast the Map's (final) values to an object
+  // but until the values are not final, I am using Maps to hold their values
   const retStatusChange = new Map()
   retStatusChange.set('change', [])
 
@@ -23,114 +25,106 @@ function checkCashRegister(price, cash, cid) {
     return previous
   }, 0)
 
-  // if change > 99, deduct from one hundred array
-  let changeGiven = 0
-  while (changeGiven < change) {
-    while (change > 99) {
-      cid[8][1] = cid[8][1] - unitAmount["ONE HUNDRED"]
-      changeGiven += unitAmount["ONE HUNDRED"]
-      change = change - unitAmount["ONE HUNDRED"]
+  let hundredsBucket = cid[8][1]
+  let twentiesBucket = cid[7][1]
+  let tensBucket = cid[6][1]
+  let fivesBucket = cid[5][1]
+  let onesBucket = cid[4][1]
+  let quartersBucket = cid[3][1]
+  let dimesBucket = cid[2][1]
+  let nickelsBucket = cid[1][1]
+  let penniesBucket = cid[0][1]
+
+  if (change > 99) {
+    while (hundredsBucket > 0) {
+      if (change >= unitAmount["ONE HUNDRED"]) {
+        change = change - unitAmount["ONE HUNDRED"]
+        hundredsBucket = hundredsBucket - unitAmount["ONE HUNDRED"]
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 20 to 99, deduct from twenty array
-  while (changeGiven < change) {
-    while (change >= 20) {
-      cid[7][1] = cid[7][1] - unitAmount.TWENTY
-      changeGiven += unitAmount.TWENTY
-      change = change - unitAmount.TWENTY
+  if (change >= 20) {
+    while (twentiesBucket > 0) {
+      if (change >= unitAmount.TWENTY) {
+        change = change - unitAmount.TWENTY
+        twentiesBucket = twentiesBucket - unitAmount.TWENTY
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 10 to 19, deduct from ten array
-  while (changeGiven < change) {
-    while (change >= 10) {
-      cid[6][1] = cid[6][1] - unitAmount.TEN
-      changeGiven += unitAmount.TEN
-      change = change - unitAmount.TEN
+  if (change >= 10) {
+    while (tensBucket > 0) {
+      if (change >= unitAmount.TEN) {
+        change = change - unitAmount.TEN
+        tensBucket = tensBucket - unitAmount.TEN
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 5 to 9, deduct from five array
-  while (changeGiven < change) {
-    while (change >= 5) {
-      cid[5][1] = cid[5][1] - unitAmount.FIVE
-      changeGiven += unitAmount.FIVE
-      change = change - unitAmount.FIVE
+  if (change >= 5) {
+    while (fivesBucket > 0) {
+      if (change >= unitAmount.FIVE) {
+        change = change - unitAmount.FIVE
+        fivesBucket = fivesBucket - unitAmount.FIVE
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 1 to 4, deduct from one array
-  while (changeGiven < change) {
-    while (change >= 1) {
-      cid[4][1] = cid[4][1] - unitAmount.ONE
-      changeGiven += unitAmount.ONE
-      change = change - unitAmount.ONE
+  if (change >= 1) {
+    while (onesBucket > 0) {
+      if (change >= unitAmount.ONE) {
+        change = change - unitAmount.ONE
+        onesBucket = onesBucket - unitAmount.ONE
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 0.25 to 0.99, deduct from quarter array
-  while (changeGiven < change) {
-    while (change >= 0.25) {
-      cid[3][1] = cid[3][1] - unitAmount.QUARTER
-      changeGiven += unitAmount.QUARTER
-      change = change - unitAmount.QUARTER
+  if (change >= 0.25) {
+    while (quartersBucket > 0) {
+      if (change >= unitAmount.QUARTER) {
+        change = change - unitAmount.QUARTER
+        quartersBucket = quartersBucket - unitAmount.QUARTER
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 0.10 to 0.24, deduct from dime array
-  while (changeGiven < change) {
-    while (change >= 0.1) {
-      cid[2][1] = cid[2][1] - unitAmount.DIME
-      changeGiven += unitAmount.DIME
-      change = change - unitAmount.DIME
+  if (change >= 0.10) {
+    while (dimesBucket > 0) {
+      if (change >= unitAmount.DIME) {
+        change = change - unitAmount.DIME
+        dimesBucket = dimesBucket - unitAmount.DIME
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 0.05 to 0.09, deduct from nickel array
-  while (changeGiven < change) {
-    while (change >= 0.05) {
-      cid[1][1] = cid[1][1] - unitAmount.NICKEL
-      changeGiven += unitAmount.NICKEL
-      change = change - unitAmount.NICKEL
+  if (change >= 0.05) {
+    while (nickelsBucket > 0) {
+      if (change >= unitAmount.NICKEL) {
+        change = change - unitAmount.NICKEL
+        nickelsBucket = nickelsBucket - unitAmount.NICKEL
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
-  // if change from 0.01 to 0.04, deduct from penny array
-  while (changeGiven < change) {
-    while (change >= 0.01) {
-      cid[0][1] = cid[0][1] - unitAmount.PENNY
-      changeGiven += unitAmount.PENNY
-      change = change - unitAmount.PENNY
+  if (change >= 0.01) {
+    while (penniesBucket > 0) {
+      if (change >= unitAmount.PENNY) {
+        change = Math.round((change + Number.EPSILON) * 100) / 100
+        change = change - unitAmount.PENNY
+        penniesBucket = penniesBucket - unitAmount.PENNY
+      } else {
+        break
+      }
     }
-    const changeArr = retStatusChange.get("change")
-    changeArr.push([changeGiven])
-    retStatusChange.set("change", changeArr)
-    changeGiven = 0
   }
 
   if (totalInDrawer < change || change !== 0) {
@@ -141,7 +135,11 @@ function checkCashRegister(price, cash, cid) {
   } else {
     retStatusChange.set("status", "OPEN")
   }
-  const retObj = { status: retStatusChange.get("status"), change: retStatusChange.get("change") }
+
+  const retObj = {
+    status: retStatusChange.get("status"),
+    change: retStatusChange.get("change")
+  }
   return retObj;
 }
 // let b = checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
