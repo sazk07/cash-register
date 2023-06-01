@@ -70,14 +70,17 @@ function checkCashRegister(price, cash, cid) {
   change >= unitAmount.NICKEL && ( payTheChange(nickelsBucket, unitAmount.NICKEL, nickelsBucketName) )
   change >= unitAmount.PENNY && ( payTheChange(penniesBucket, unitAmount.PENNY, penniesBucketName) )
 
-  if (totalInDrawer < originalChange || change !== 0) {
-    retStatusChange.set("status", "INSUFFICIENT_FUNDS")
-  } else if (totalInDrawer === originalChange) {
-    retStatusChange.set("status", "CLOSED")
-    retStatusChange.set("change", cid)
-  } else {
-    retStatusChange.set("status", "OPEN")
-    retStatusChange.set("change", changeToBeGivenArray)
+  switch (true) {
+    case (totalInDrawer < originalChange || change !== 0):
+      retStatusChange.set("status", "INSUFFICIENT_FUNDS")
+      break;
+    case (totalInDrawer === originalChange):
+      retStatusChange.set("status", "CLOSED")
+      retStatusChange.set("change", cid)
+      break;
+    default:
+      retStatusChange.set("status", "OPEN")
+      retStatusChange.set("change", changeToBeGivenArray)
   }
 
   const retObj = {
