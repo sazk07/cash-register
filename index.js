@@ -54,33 +54,15 @@ function checkCashRegister(price, cash, cid) {
     return changeToBeGivenArray.push([bucketName, changeToBeGiven]);
   }
 
-  if (change > unitAmount["ONE HUNDRED"]) {
-    payTheChange(hundredsBucket, unitAmount["ONE HUNDRED"], hundredsBucketName)
-  }
-  if (change >= unitAmount.TWENTY) {
-    payTheChange(twentiesBucket, unitAmount.TWENTY, twentiesBucketName)
-  }
-  if (change >= unitAmount.TEN) {
-    payTheChange(tensBucket, unitAmount.TEN, tensBucketName)
-  }
-  if (change >= unitAmount.FIVE) {
-    payTheChange(fivesBucket, unitAmount.FIVE, fivesBucketName)
-  }
-  if (change >= unitAmount.ONE) {
-    payTheChange(onesBucket, unitAmount.ONE, onesBucketName)
-  }
-  if (change >= unitAmount.QUARTER) {
-    payTheChange(quartersBucket, unitAmount.QUARTER, quartersBucketName)
-  }
-  if (change >= unitAmount.DIME) {
-    payTheChange(dimesBucket, unitAmount.DIME, dimesBucketName)
-  }
-  if (change >= unitAmount.NICKEL) {
-    payTheChange(nickelsBucket, unitAmount.NICKEL, nickelsBucketName)
-  }
-  if (change >= unitAmount.PENNY) {
-    payTheChange(penniesBucket, unitAmount.PENNY, penniesBucketName)
-  }
+  change > unitAmount["ONE HUNDRED"] && ( payTheChange(hundredsBucket, unitAmount["ONE HUNDRED"], hundredsBucketName) )
+  change >= unitAmount.TWENTY && ( payTheChange(twentiesBucket, unitAmount.TWENTY, twentiesBucketName) )
+  change >= unitAmount.TEN && ( payTheChange(tensBucket, unitAmount.TEN, tensBucketName) )
+  change >= unitAmount.FIVE && ( payTheChange(fivesBucket, unitAmount.FIVE, fivesBucketName) )
+  change >= unitAmount.ONE && ( payTheChange(onesBucket, unitAmount.ONE, onesBucketName) )
+  change >= unitAmount.QUARTER && ( payTheChange(quartersBucket, unitAmount.QUARTER, quartersBucketName) )
+  change >= unitAmount.DIME && ( payTheChange(dimesBucket, unitAmount.DIME, dimesBucketName) )
+  change >= unitAmount.NICKEL && ( payTheChange(nickelsBucket, unitAmount.NICKEL, nickelsBucketName) )
+  change >= unitAmount.PENNY && ( payTheChange(penniesBucket, unitAmount.PENNY, penniesBucketName) )
 
   if (totalInDrawer < originalChange || change !== 0) {
     retStatusChange.set("status", "INSUFFICIENT_FUNDS")
