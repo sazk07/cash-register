@@ -43,11 +43,15 @@ function checkCashRegister(price, cash, cid) {
     let changeToBeGiven = 0
     while (bucket > 0) {
       if (change >= denomination) {
+        // deduct the denomination note amount from the change
         change = change - denomination
         change = Math.round((change + Number.EPSILON) * 100) / 100
+        // deduct from the cash register
         bucket = bucket - denomination
+        // add the amount taken out of the register to the change to be given
         changeToBeGiven = changeToBeGiven + denomination
       } else {
+        // step out of the loop when register is empty and proceed to next register
         break
       }
     }
