@@ -2,7 +2,7 @@
 
 function checkCashRegister(price, cash, cid) {
   let change = cash - price;
-  let originalChange = change
+  const originalChange = change
 
   const unitAmount = {
     PENNY: 0.01,
