@@ -16,7 +16,7 @@ function checkCashRegister(price, cash, cid) {
     "ONE HUNDRED": 100,
   }
 
-  const changeGivenArray = []
+  const changeToBeGivenArray = []
 
   // using Maps instead of Objects, although later on I cast the Map's (final) values to an object
   // but until the values are not final, I am using Maps to hold their values
@@ -28,135 +28,58 @@ function checkCashRegister(price, cash, cid) {
     return previous
   }, 0)
 
-  let hundredsBucket = cid[8][1]
-  let twentiesBucket = cid[7][1]
-  let tensBucket = cid[6][1]
-  let fivesBucket = cid[5][1]
-  let onesBucket = cid[4][1]
-  let quartersBucket = cid[3][1]
-  let dimesBucket = cid[2][1]
-  let nickelsBucket = cid[1][1]
-  let penniesBucket = cid[0][1]
+  let [ hundredsBucketName, hundredsBucket ] = [...cid[8]]
+  let [ twentiesBucketName, twentiesBucket ] = [...cid[7]]
+  let [ tensBucketName, tensBucket ] = [...cid[6]]
+  let [ fivesBucketName, fivesBucket ] = [...cid[5]]
+  let [ onesBucketName, onesBucket ] = [...cid[4]]
+  let [ quartersBucketName, quartersBucket ] = [...cid[3]]
+  let [ dimesBucketName, dimesBucket ] = [...cid[2]]
+  let [ nickelsBucketName, nickelsBucket ] = [...cid[1]]
+  let [ penniesBucketName, penniesBucket ] = [...cid[0]]
+
+  // returns an array consisting of name and the amount added to change to be given
+  function payTheChange(bucket, denomination, bucketName) {
+    let changeToBeGiven = 0
+    while (bucket > 0) {
+      if (change >= denomination) {
+        change = change - denomination
+        change = Math.round((change + Number.EPSILON) * 100) / 100
+        bucket = bucket - denomination
+        changeToBeGiven = changeToBeGiven + denomination
+      } else {
+        break
+      }
+    }
+    return changeToBeGivenArray.push([bucketName, changeToBeGiven]);
+  }
 
   if (change > 99) {
-    let changeGiven = 0
-    while (hundredsBucket > 0) {
-      if (change >= unitAmount["ONE HUNDRED"]) {
-        change = change - unitAmount["ONE HUNDRED"]
-        hundredsBucket = hundredsBucket - unitAmount["ONE HUNDRED"]
-        changeGiven = changeGiven + unitAmount["ONE HUNDRED"]
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[8][0], changeGiven]);
+    payTheChange(hundredsBucket, unitAmount["ONE HUNDRED"], hundredsBucketName)
   }
   if (change >= 20) {
-    let changeGiven = 0
-    while (twentiesBucket > 0) {
-      if (change >= unitAmount.TWENTY) {
-        change = change - unitAmount.TWENTY
-        twentiesBucket = twentiesBucket - unitAmount.TWENTY
-        changeGiven = changeGiven + unitAmount.TWENTY
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[7][0], changeGiven]);
+    payTheChange(twentiesBucket, unitAmount.TWENTY, twentiesBucketName)
   }
   if (change >= 10) {
-    let changeGiven = 0
-    while (tensBucket > 0) {
-      if (change >= unitAmount.TEN) {
-        change = change - unitAmount.TEN
-        tensBucket = tensBucket - unitAmount.TEN
-        changeGiven = changeGiven + unitAmount.TEN
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[6][0], changeGiven]);
+    payTheChange(tensBucket, unitAmount.TEN, tensBucketName)
   }
   if (change >= 5) {
-    let changeGiven = 0
-    while (fivesBucket > 0) {
-      if (change >= unitAmount.FIVE) {
-        change = change - unitAmount.FIVE
-        fivesBucket = fivesBucket - unitAmount.FIVE
-        changeGiven = changeGiven + unitAmount.FIVE
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[5][0], changeGiven]);
+    payTheChange(fivesBucket, unitAmount.FIVE, fivesBucketName)
   }
   if (change >= 1) {
-    let changeGiven = 0
-    while (onesBucket > 0) {
-      if (change >= unitAmount.ONE) {
-        change = change - unitAmount.ONE
-        onesBucket = onesBucket - unitAmount.ONE
-        changeGiven = changeGiven + unitAmount.ONE
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[4][0], changeGiven]);
+    payTheChange(onesBucket, unitAmount.ONE, onesBucketName)
   }
   if (change >= 0.25) {
-    let changeGiven = 0
-    while (quartersBucket > 0) {
-      if (change >= unitAmount.QUARTER) {
-        change = change - unitAmount.QUARTER
-        quartersBucket = quartersBucket - unitAmount.QUARTER
-        changeGiven = changeGiven + unitAmount.QUARTER
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[3][0], changeGiven]);
+    payTheChange(quartersBucket, unitAmount.QUARTER, quartersBucketName)
   }
   if (change >= 0.10) {
-    let changeGiven = 0
-    while (dimesBucket > 0) {
-      if (change >= unitAmount.DIME) {
-        change = change - unitAmount.DIME
-        dimesBucket = dimesBucket - unitAmount.DIME
-        changeGiven = changeGiven + unitAmount.DIME
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[2][0], changeGiven]);
+    payTheChange(dimesBucket, unitAmount.DIME, dimesBucketName)
   }
   if (change >= 0.05) {
-    let changeGiven = 0
-    while (nickelsBucket > 0) {
-      if (change >= unitAmount.NICKEL) {
-        change = Math.round((change + Number.EPSILON) * 100) / 100
-        change = change - unitAmount.NICKEL
-        nickelsBucket = nickelsBucket - unitAmount.NICKEL
-        changeGiven = changeGiven + unitAmount.NICKEL
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[1][0], changeGiven]);
+    payTheChange(nickelsBucket, unitAmount.NICKEL, nickelsBucketName)
   }
   if (change >= 0.01) {
-    let changeGiven = 0
-    while (penniesBucket > 0) {
-      if (change >= unitAmount.PENNY) {
-        change = Math.round((change + Number.EPSILON) * 100) / 100
-        change = change - unitAmount.PENNY
-        penniesBucket = penniesBucket - unitAmount.PENNY
-        changeGiven = changeGiven + unitAmount.PENNY
-        changeGiven = Math.round((changeGiven + Number.EPSILON) * 100) / 100
-      } else {
-        break
-      }
-    }
-    changeGivenArray.push([cid[0][0], changeGiven]);
+    payTheChange(penniesBucket, unitAmount.PENNY, penniesBucketName)
   }
 
   if (totalInDrawer < originalChange || change !== 0) {
@@ -166,7 +89,7 @@ function checkCashRegister(price, cash, cid) {
     retStatusChange.set("change", cid)
   } else {
     retStatusChange.set("status", "OPEN")
-    retStatusChange.set("change", changeGivenArray)
+    retStatusChange.set("change", changeToBeGivenArray)
   }
 
   const retObj = {
@@ -178,11 +101,11 @@ function checkCashRegister(price, cash, cid) {
 // let b = checkCashRegister(19.5, 20, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
 // console.log(b)
 // {status: "OPEN", change: [["QUARTER", 0.5]]}
-// let c = checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
-// console.log(c)
+let c = checkCashRegister(3.26, 100, [["PENNY", 1.01], ["NICKEL", 2.05], ["DIME", 3.1], ["QUARTER", 4.25], ["ONE", 90], ["FIVE", 55], ["TEN", 20], ["TWENTY", 60], ["ONE HUNDRED", 100]])
+console.log(c)
 // {status: "OPEN", change: [["TWENTY", 60], ["TEN", 20], ["FIVE", 15], ["ONE", 1], ["QUARTER", 0.5], ["DIME", 0.2], ["PENNY", 0.04]] }
-let d = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
-console.log(d)
+// let d = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 0], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
+// console.log(d)
 // {status: "INSUFFICIENT_FUNDS", change: []}
 // let e = checkCashRegister(19.5, 20, [["PENNY", 0.01], ["NICKEL", 0], ["DIME", 0], ["QUARTER", 0], ["ONE", 1], ["FIVE", 0], ["TEN", 0], ["TWENTY", 0], ["ONE HUNDRED", 0]])
 // console.log(e)
